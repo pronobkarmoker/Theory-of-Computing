@@ -1,0 +1,30 @@
+Enter number of states: Enter states: Enter number of Alphabet: Enter alphabets: transition functions: 
+Enter transition for state a: 
+Enter for alphabet 0: Enter for alphabet 1: Enter transition for state b: 
+Enter for alphabet 0: Enter for alphabet 1: Enter transition for state c: 
+Enter for alphabet 0: Enter for alphabet 1: Enter transition for state d: 
+Enter for alphabet 0: Enter for alphabet 1: Enter transition for state e: 
+Enter for alphabet 0: Enter for alphabet 1: Enter transition for state f: 
+Enter for alphabet 0: Enter for alphabet 1: Enter transition for state g: 
+Enter for alphabet 0: Enter for alphabet 1: Enter transition for state h: 
+Enter for alphabet 0: Enter for alphabet 1: Enter final state: 
+=  
+X  =  
+X  X  =  
+X  X  X  =  
+X  X  =  X  =  
+X  =  X  X  X  =  
+=  X  X  X  X  X  =  
+X  X  X  X  X  X  X  =  
+
+Transitions to New States:
+state c with 0 : d
+state c with 1 : b
+state b with 0 : a
+state b with 1 : c
+state a with 0 : b
+state a with 1 : a
+state d with 0 : d
+state d with 1 : a
+state h with 0 : g
+state h with 1 : d

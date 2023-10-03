@@ -6,6 +6,7 @@ using namespace std;
 int main()
 {
     freopen("dfa_min.txt", "r", stdin);
+    freopen("dfa_min_output.txt", "w", stdout);
     char states[mx], alpha[mx], str[mx], start, end, state, path[mx], paths = 0, p = 0;
     int numState, numAlpha, i, j, k = 0;
 

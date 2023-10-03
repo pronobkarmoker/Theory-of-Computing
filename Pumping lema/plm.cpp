@@ -10,13 +10,11 @@ char x[MAX], y[MAX], z[MAX];
 
 bool pumping()
 {
-    // int k;
-    // cout<<"Enter k:";
-    // cin>>k;
+    
     for (int k = 0; k < 200; k++)
     {
         int len = strlen(y);
-        cout << "lengt of y:" << len << endl;
+        cout << "length of y:" << len << endl;
         char newY[MAX];
         for (int i = 0; i < k * len; i += len)
         {
