@@ -1,81 +1,107 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <fstream>
 using namespace std;
-#define mx 100
 
 int main()
 {
-    // freopen("regex.txt", "r", stdin);
+    int state = 3, symbol = 2;
+    int transitionTable[state][symbol];
+    int modifiedTT[state][state] = {-1};
 
-    char str[mx], state;
-    int numState, numAlpha, i, j, k = 0, p, states[mx], alpha[mx];
-
-    printf("Enter number of states: ");
-    cin >> numState;
-
-    printf("Enter states: ");
-    for (i = 0; i < numState; i++)
-        cin >> states[i];
-
-    printf("Enter number of Alphabet: ");
-    cin >> numAlpha;
-
-    printf("Enter alphabets: ");
-
-    for (i = 0; i < numAlpha; i++)
-        cin >> alpha[i];
-
-    int transit[numState][numAlpha];
-    printf("Provide transition functions: \n");
-    for (i = 0; i < numState; i++)
+    fstream file;
+    file.open("regex.txt", ios::in);
+    if (!file)
     {
-        printf("Enter transition for state %d: \n", states[i]);
-        for (j = 0; j < numAlpha; j++)
+        cout << "File doesn't exist." << endl;
+    }
+    else
+    {
+        for (int i = 0; i < state; i++)
         {
-            printf("Enter for alphabet %d: ", alpha[j]);
-            cin >> transit[i][j];
+            for (int j = 0; j < symbol; j++)
+            {
+                file >> transitionTable[i][j];
+            }
         }
     }
 
-    string R[3][numState + 1][numState + 1];
-
-    for (i = 0; i < numState; i++)
+    for (int i = 0; i < state; i++)
     {
-        for (j = i; j < numState; j++)
+        for (int j = 0; j < state; j++)
         {
-            for (p = 0; p < numAlpha; p++)
+            modifiedTT[i][j] = -1;
+            modifiedTT[i][transitionTable[i][0]] = 0;
+            modifiedTT[i][transitionTable[i][1]] = 1;
+        }
+    }
+
+    // // printing modifiedTT
+    // for(int i=0; i<state; i++){
+    //     for(int j=0; j<state; j++){
+    //         cout << modifiedTT[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    string r[3][state][state];
+
+    // for Rij(0)
+    for (int i = 0; i < state; i++)
+    {
+        for (int j = 0; j < state; j++)
+        {
+            if (modifiedTT[i][j] != -1)
             {
-                if (transit[i][p] == j + 1)
+                if (i == j)
                 {
-                    R[0][i + 1][j + 1] += to_string(p);
-                    if (i == j)
-                        R[0][i + 1][j + 1] += "+E";
-                    break;
+                    r[0][i][j] = modifiedTT[i][j] + '0';
+                    r[0][i][j].append("+E");
+                }
+                else
+                {
+                    r[0][i][j] = modifiedTT[i][j] + '0';
                 }
             }
-            if (p == numAlpha)
-                R[0][i + 1][j + 1] += "N";
-        }
-    }
-
-    for (k = 1; k < 3; k++)
-    {
-        for (i = 1; i < numState + 1; i++)
-        {
-            for (j = i; j < numState + 1; j++)
+            else
             {
-                R[k][i][j] = R[k - 1][i][j] + "+" + R[k - 1][i][k] + "(" + R[k - 1][k][k] + ")*" + R[k - 1][k][j];
+                r[0][i][j] = "null";
             }
         }
     }
 
-    for (k = 0; k < 3; k++)
+    // // printing r
+    // for(int i=0; i<state; i++){
+    //     for(int j=0; j<state; j++){
+    //         cout << r[0][i][j] << "\t";
+    //     }
+    //     cout << endl;
+    // }
+
+    for (int k = 1; k < 3; k++)
     {
-        for (i = 1; i < numState + 1; i++)
+        for (int i = 0; i < state; i++)
         {
-            for (j = i; j < numState + 1; j++)
-                cout << "R"
-                     << "(" << k << ")" << i << j << ": " << R[k][i][j] << endl;
+            for (int j = 0; j < state; j++)
+            {
+                r[k][i][j] = r[k - 1][i][j] + " + " + r[k - 1][i][k] + "(" + r[k - 1][k][k] + ")" + " * " + r[k - 1][k][j];
+            }
         }
     }
-    return 0;
+
+    for (int k = 0; k < 3; k++)
+    {
+        cout << "Regular expression of R" << k << " is: " << endl;
+        cout << endl;
+        for (int i = 0; i < state; i++)
+        {
+            for (int j = 0; j < state; j++)
+            {
+                cout << "R(" << k << ")" << i << j << " ||  ";
+                cout << r[k][i][j] << endl;
+            }
+            cout << endl;
+            cout << endl;
+        }
+        cout << endl;
+    }
 }
