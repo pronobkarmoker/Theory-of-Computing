@@ -7,9 +7,9 @@
 
 typedef struct
 {
-    int nos; // number of states
-    int noa; // number of Alphabet
-    int nof; // number of final states
+    int nos;
+    int noa;
+    int nof; 
 
     int startState;
     int alphabet[MAX_ALPHABET];
@@ -20,9 +20,9 @@ typedef struct
 
 typedef struct
 {
-    int nos; // number of states
-    int noa; // number of Alphabet
-    int nof; // number of final states
+    int nos; 
+    int noa; 
+    int nof; 
 
     int startState;
     int alphabet[MAX_ALPHABET];
@@ -31,7 +31,7 @@ typedef struct
     int trns[MAX_STATES][MAX_ALPHABET];
 } DFA;
 
-int states[MAX_STATES]; // these will be neede for convertion.
+int states[MAX_STATES]; 
 int newStates[MAX_STATES];
 int numNewStates = 0;
 DFA dfa;
@@ -46,10 +46,10 @@ int main()
 {
 
     initNfa();
-    initDfa(); // if you don't provide any prototype then the
+    initDfa(); 
     NfaToDfa();
     printDfa();
-    // let's check whether the initNfa works or not?
+    
     return 0;
 }
 
@@ -57,7 +57,7 @@ void initNfa()
 {
 
     int numEdge;
-    char end[5]; // end can be phi so we have use the string to take input.
+    char end[5]; 
 
     printf("How many states: ");
     scanf("%d", &nfa.nos);
@@ -140,7 +140,7 @@ void initDfa()
 {
     dfa.nos = nfa.nos;
     dfa.noa = nfa.noa;
-    dfa.nof = 0; // it needs to be refined.//polished a lot
+    dfa.nof = 0;
 
     dfa.startState = nfa.startState;
     for (int i = 0; i < dfa.noa; i++)
@@ -164,7 +164,7 @@ void initDfa()
 
 void NfaToDfa()
 {
-    // initializing the
+   
     memset(states, 0, sizeof(states));
 
     for (int i = 0; i < nfa.nos; i++)
@@ -194,8 +194,7 @@ void NfaToDfa()
         }
     }
 
-    // now let's address the newly created states.
-
+    
     for (int i = 0; i < numNewStates; i++)
     {
         for (int j = 0; j < nfa.noa; j++)
@@ -218,8 +217,7 @@ void NfaToDfa()
         }
     }
 
-    // now this should work..lets see
-    // now let's work with the final states:
+    
     for (int i = 0; i < MAX_STATES; i++)
     {
         if (states[i])
