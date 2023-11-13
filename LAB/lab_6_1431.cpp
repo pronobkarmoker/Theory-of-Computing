@@ -35,13 +35,7 @@ int main()
         }
     }
 
-    // // printing modifiedTT
-    // for(int i=0; i<state; i++){
-    //     for(int j=0; j<state; j++){
-    //         cout << modifiedTT[i][j] << " ";
-    //     }
-    //     cout << endl;
-    // }
+   
 
     string r[3][state][state];
 
@@ -69,13 +63,6 @@ int main()
         }
     }
 
-    // // printing r
-    // for(int i=0; i<state; i++){
-    //     for(int j=0; j<state; j++){
-    //         cout << r[0][i][j] << "\t";
-    //     }
-    //     cout << endl;
-    // }
 
     for (int k = 1; k < 3; k++)
     {
