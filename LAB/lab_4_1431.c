@@ -7,9 +7,13 @@
 
 typedef struct
 {
-    int nos; 
-    int noa; 
-    int nof; 
+
+    int nos;
+    int noa;
+    int nos;
+    int noa;
+
+    int nof;
 
     int startState;
     int alphabet[MAX_ALPHABET];
@@ -20,8 +24,12 @@ typedef struct
 
 typedef struct
 {
+
     int nos;
-    int noa; 
+    int noa;
+    int nof;
+    int nos;
+    int noa;
     int nof;
 
     int startState;
@@ -31,7 +39,7 @@ typedef struct
     int trns[MAX_STATES][MAX_ALPHABET];
 } DFA;
 
-int states[MAX_STATES]; 
+int states[MAX_STATES];
 int newStates[MAX_STATES];
 int numNewStates = 0;
 DFA dfa;
@@ -46,10 +54,10 @@ int main()
 {
 
     initNfa();
-    initDfa(); 
+    initDfa();
     NfaToDfa();
     printDfa();
-    
+
     return 0;
 }
 
@@ -57,7 +65,7 @@ void initNfa()
 {
 
     int numEdge;
-    char end[5]; 
+    char end[5];
 
     printf("How many states: ");
     scanf("%d", &nfa.nos);
@@ -140,7 +148,9 @@ void initDfa()
 {
     dfa.nos = nfa.nos;
     dfa.noa = nfa.noa;
-    dfa.nof = 0; 
+
+    dfa.nof = 0;
+    dfa.nof = 0;
 
     dfa.startState = nfa.startState;
     for (int i = 0; i < dfa.noa; i++)
@@ -164,7 +174,7 @@ void initDfa()
 
 void NfaToDfa()
 {
-    
+
     memset(states, 0, sizeof(states));
 
     for (int i = 0; i < nfa.nos; i++)
@@ -193,8 +203,6 @@ void NfaToDfa()
             dfa.trns[1 << i][j] = state_union;
         }
     }
-
-
     for (int i = 0; i < numNewStates; i++)
     {
         for (int j = 0; j < nfa.noa; j++)
