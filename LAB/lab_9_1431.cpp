@@ -127,6 +127,7 @@ int main()
         {
             cout << soln[i] << endl;
         }
+        cout << "In this Grammar" << endl;
     }
     else
         cout << "Not in this grammar";

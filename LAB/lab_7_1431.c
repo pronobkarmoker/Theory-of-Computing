@@ -5,15 +5,15 @@
 
 typedef struct
 {
-    int nos;
-    int delta[10][2];
+    int nos;          // number of states
+    int delta[10][2]; // transition table
     int start;
-    int nof;
-    bool end[10];
+    int nof;      // number of final states
+    bool end[10]; // if the state is final then true;
 } DFA;
 
 DFA init_dfa();
-int **TableFilling(DFA);
+int **myhillNerode(DFA);
 DFA mdfa(DFA, int **);
 
 int main()
@@ -40,8 +40,8 @@ int main()
         }
     }
     printf("\n");
-    int **table = TableFilling(dfa);
-    printf("\n\nmyhill table:\n");
+    int **table = myhillNerode(dfa);
+    printf("\n\nhere is the myhill table:\n");
     for (int i = 0; i < dfa.nos; i++)
     {
         for (int j = 0; j < i; j++)
@@ -50,7 +50,7 @@ int main()
         }
         printf("\n");
     }
-    // starts minimized dfa calculation.
+    // here starts minimized dfa calculation.
     DFA mDFA = mdfa(dfa, table);
     printf("\n\ntransition table of minimized dfa:\n   a(0) a(1)\n");
     for (int i = 0; i < mDFA.nos; i++)
@@ -78,6 +78,27 @@ int main()
 DFA init_dfa()
 {
     DFA dfa;
+    // printf("states: ");
+    // scanf("%d",&dfa.nos);
+    // printf("start: ");
+    // scanf("%d",&dfa.start);
+    // printf("number of end states: ");
+    // scanf("%d",&dfa.nof);
+    // printf("end states: ");
+    // for(int i = 0; i < dfa.nof; i++){
+    // int temp;
+    //     scanf("%d",&temp);
+    //      getchar();
+    //      dfa.end[temp] = true;
+    // }
+    // printf("Transition table:\n");
+    // for(int i = 0; i < dfa.nos; i++){
+    //     for(int j = 0; j < 2; j++){
+    //         printf("delta(q%d,a%d): ",i,j);
+    //         scanf("%d",&dfa.delta[i][j]);
+    //     }
+    // }
+    // the commented part are for custom dfa.
     dfa.nos = 8;
     dfa.start = 0;
     dfa.nof = 1;
@@ -96,16 +117,16 @@ DFA init_dfa()
     dfa.delta[4][1] = 5;
     dfa.delta[5][0] = 6;
     dfa.delta[5][1] = 4;
-    dfa.delta[6][0] = 4;
+    dfa.delta[6][0] = 5;
     dfa.delta[6][1] = 6;
     dfa.delta[7][0] = 6;
     dfa.delta[7][1] = 3;
     return dfa;
 }
 
-int **TableFilling(DFA dfa)
+int **myhillNerode(DFA dfa)
 {
-    bool cng;
+    bool changed;
     int **table = (int **)malloc(dfa.nos * sizeof(int *));
     for (int i = 0; i < dfa.nos; i++)
     {
@@ -117,7 +138,7 @@ int **TableFilling(DFA dfa)
     }
     do
     {
-        cng = false;
+        changed = false;
         for (int i = 0; i < dfa.nos; i++)
         {
             for (int j = 0; j < i; j++)
@@ -127,7 +148,7 @@ int **TableFilling(DFA dfa)
                     if ((dfa.end[i] && !dfa.end[j]) || (dfa.end[j] && !dfa.end[i]))
                     {
                         table[i][j] = 1;
-                        cng = true;
+                        changed = true;
                     }
                     else
                     {
@@ -136,14 +157,14 @@ int **TableFilling(DFA dfa)
                             if (table[dfa.delta[i][k]][dfa.delta[j][k]] == 1)
                             {
                                 table[i][j] = 1;
-                                cng = true;
+                                changed = true;
                             }
                         }
                     }
                 }
             }
         }
-    } while (cng);
+    } while (changed);
     return table;
 }
 

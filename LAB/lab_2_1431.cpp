@@ -1,8 +1,8 @@
-#include <stdio.h>
+#include <bits/stdc++.h>
 
+using namespace std;
 int main()
 {
-
     int state = 3;
     printf("enter number of state :\n");
     scanf("%d", &state);
